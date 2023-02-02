@@ -81,6 +81,7 @@ public class FlyDrone {
         Map<String,ArrayList<LngLat>> allPaths = new HashMap<>();
         for (Restaurant restaurant : restaurants){
             allPaths.put(restaurant.getName(), FindPath.generateGoodFlightpath(new LngLat(restaurant.getLongitude(),restaurant.getLatitude()), appletonTower));
+            //System.out.println(restaurant.getName() + "'s route takes " + allPaths.get(restaurant.getName()) + " steps");
         }
         return allPaths;
     }
@@ -140,6 +141,13 @@ public class FlyDrone {
         for (Order order : orders){
             outcome = order.getOutcome().toString();
             delivery = new JSONObject();
+            /*
+            if (outcome.equals(Order.OrderOutcome.Delivered.toString())){
+                if (!(order.generateOrderState(restaurants).equals(Order.OrderOutcome.ValidButNotDelivered))){
+                    System.err.println("Drone sends the invalid orders");
+                }
+            }
+            */
             delivery.put("orderNo", order.getOrderNo());
             delivery.put("outcome",outcome);
             delivery.put("costInPence",order.getPriceTotalInPence());
